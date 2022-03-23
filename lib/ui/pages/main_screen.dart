@@ -19,8 +19,8 @@ class MainScreen extends StatelessWidget {
             right: defaultMargin,
           ),
           decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: BorderRadius.circular(defaultRadius),
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(18),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

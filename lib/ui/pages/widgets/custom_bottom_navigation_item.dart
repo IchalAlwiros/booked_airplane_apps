@@ -16,29 +16,24 @@ class CustomBottomNavigationItems extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(),
-            Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    imageUrl!,
-                  ),
-                ),
+        SizedBox(),
+        Container(
+          width: 24,
+          height: 24,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                imageUrl!,
               ),
             ),
-            Container(
-              width: 30,
-              height: 2,
-              decoration: BoxDecoration(
-                  color: isSelected ? primaryColor : kTransparantColor,
-                  borderRadius: BorderRadius.circular(defaultRadius)),
-            )
-          ],
+          ),
+        ),
+        Container(
+          width: 30,
+          height: 2,
+          decoration: BoxDecoration(
+              color: isSelected ? primaryColor : kTransparantColor,
+              borderRadius: BorderRadius.circular(defaultRadius)),
         ),
       ],
     );

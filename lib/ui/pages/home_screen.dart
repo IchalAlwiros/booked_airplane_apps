@@ -54,6 +54,74 @@ class HomaScreen extends StatelessWidget {
       );
     }
 
+    Widget popularDestinations() {
+      return Container(
+        margin: EdgeInsets.only(top: 30),
+        child: Row(
+          children: [
+            Container(
+              width: 200,
+              height: 323,
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.only(
+                left: defaultMargin,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(defaultRadius),
+                color: whiteColor,
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 180,
+                    height: 220,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultRadius),
+                      image: DecorationImage(
+                        image: AssetImage('assets/image 7.png'),
+                      ),
+                    ),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        height: 30,
+                        width: 55,
+                        decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(defaultRadius))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                'assets/Star 1.png',
+                              ))),
+                            ),
+                            Text(
+                              '4.8',
+                              style: blackTextStyle.copyWith(
+                                fontWeight: medium,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
     return ListView(
       children: [],
     );
