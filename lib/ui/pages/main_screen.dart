@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_airplane/shared/theme.dart';
+import 'package:flutter_airplane/ui/pages/home_screen.dart';
+import 'package:flutter_airplane/ui/pages/transactions_screen.dart';
 import 'package:flutter_airplane/ui/pages/widgets/custom_bottom_navigation_item.dart';
 
 class MainScreen extends StatelessWidget {
@@ -7,6 +9,10 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget buildContent() {
+      return TransactionScreen();
+    }
+
     Widget customBottomNavigator() {
       return Align(
         alignment: Alignment.bottomCenter,
@@ -19,7 +25,7 @@ class MainScreen extends StatelessWidget {
             right: defaultMargin,
           ),
           decoration: BoxDecoration(
-            color: Colors.amber,
+            color: whiteColor,
             borderRadius: BorderRadius.circular(18),
           ),
           child: Row(
@@ -52,6 +58,7 @@ class MainScreen extends StatelessWidget {
       body: Stack(
         children: [
           Text('Main Page'),
+          HomaScreen(),
           customBottomNavigator(),
         ],
       ),

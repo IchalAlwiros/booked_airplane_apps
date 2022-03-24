@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_airplane/ui/pages/bonus_screen.dart';
+import 'package:flutter_airplane/ui/pages/detail_screen.dart';
 import 'package:flutter_airplane/ui/pages/get_started_screen.dart';
+import 'package:flutter_airplane/ui/pages/home_screen.dart';
 import 'package:flutter_airplane/ui/pages/main_screen.dart';
 import 'package:flutter_airplane/ui/pages/sigin_up_screen.dart';
 import 'package:flutter_airplane/ui/pages/splash_screen.dart';
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
         '/sign-up': (context) => SignUpScreen(),
         '/bonus': (context) => BonusScreen(),
         '/main': (context) => MainScreen(),
+        '/home': (context) => HomaScreen(),
+        '/detail': (context) => DetailsScreen(),
       },
     );
   }

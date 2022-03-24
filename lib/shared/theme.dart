@@ -10,6 +10,9 @@ Color redColor = Color(0xffEB70A5);
 Color kBackgroundColor = Color(0xffFAFAFA);
 Color kInactiveColor = Color(0xffDBD7EC);
 
+Color kUnavaliableColor = Color(0xffEBECF1);
+Color kAvailableColor = Color(0xffE0D9FF);
+
 Color kTransparantColor = Colors.transparent;
 
 double defaultMargin = 24.0;
