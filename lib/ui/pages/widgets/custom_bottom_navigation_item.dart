@@ -1,41 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_airplane/cubit/screen_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/theme.dart';
 
 class CustomBottomNavigationItems extends StatelessWidget {
-  final String? imageUrl;
-  final bool isSelected;
+  final int index;
+  final String imageUrl;
+
   const CustomBottomNavigationItems({
     Key? key,
-    @required this.imageUrl,
-    this.isSelected = false,
+    required this.index,
+    required this.imageUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(),
-        Container(
-          width: 24,
-          height: 24,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                imageUrl!,
-              ),
+    return InkWell(
+      onTap: () {
+        context.read<ScreenCubit>().setPage(index);
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(),
+          Image.asset(
+            imageUrl,
+            width: 24,
+            height: 24,
+            color: context.read<ScreenCubit>().state == index
+                ? primaryColor
+                : greyColor,
+          ),
+          Container(
+            width: 30,
+            height: 2,
+            decoration: BoxDecoration(
+              color: context.read<ScreenCubit>().state == index
+                  ? primaryColor
+                  : kTransparantColor,
+              borderRadius: BorderRadius.circular(18),
             ),
           ),
-        ),
-        Container(
-          width: 30,
-          height: 2,
-          decoration: BoxDecoration(
-              color: isSelected ? primaryColor : kTransparantColor,
-              borderRadius: BorderRadius.circular(defaultRadius)),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

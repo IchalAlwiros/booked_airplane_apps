@@ -5,24 +5,20 @@ import 'package:flutter_airplane/ui/pages/widgets/custom_button.dart';
 import 'package:flutter_airplane/ui/pages/widgets/custom_text_form_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUpScreen extends StatefulWidget {
-  SignUpScreen({Key? key}) : super(key: key);
+class SignInScreen extends StatefulWidget {
+  SignInScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
-
-  final TextEditingController nameController = TextEditingController(text: '');
 
   final TextEditingController emailController = TextEditingController(text: '');
 
   final TextEditingController paswwordController =
       TextEditingController(text: '');
-
-  final TextEditingController hobbyController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return Container(
         margin: const EdgeInsets.only(top: 30),
         child: Text(
-          'Join us and get \nyour next journey',
+          'Sign In with your \naxisting account',
           style: blackTextStyle.copyWith(
             fontSize: 24,
             fontWeight: semiBold,
@@ -40,24 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     Widget inputSection() {
-      Widget nameInput() {
-        return CustomFormField(
-          title: 'Full Name',
-          hintText: 'Your Full Name',
-          controller: nameController,
-          validator: (value) {
-            RegExp regex = new RegExp(r'^.{3,}$');
-            if (value!.isEmpty) {
-              return ('Name is required!');
-            }
-            if (!regex.hasMatch(value)) {
-              return ('Enter valid name (Min. 3 Character)');
-            }
-            return null;
-          },
-        );
-      }
-
       Widget emailInput() {
         return CustomFormField(
           title: 'Email Address',
@@ -96,21 +74,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
       }
 
-      Widget hobbyInput() {
-        return CustomFormField(
-          title: 'Hobby',
-          hintText: 'Your Hobby',
-          controller: hobbyController,
-        );
-      }
-
       Widget submitButton() {
         return BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             // TODO: implement listener
             if (state is AuthSuccess) {
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/bonus', (route) => false);
+                  context, '/main', (route) => false);
             } else if (state is AuthFiled) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -128,15 +98,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }
 
             return CustomButtons(
-                title: 'Get Started',
+                title: 'Sign In',
                 width: double.infinity,
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    context.read<AuthCubit>().signUp(
+                    context.read<AuthCubit>().signIn(
                           email: emailController.text,
                           password: paswwordController.text,
-                          name: nameController.text,
-                          hobby: hobbyController.text,
                         );
                   }
                 });
@@ -158,10 +126,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         child: Column(
           children: [
-            nameInput(),
             emailInput(),
             passwordInput(),
-            hobbyInput(),
             submitButton(),
           ],
         ),
@@ -170,9 +136,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     Widget signInButton() {
       return InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, '/sign-in');
-        },
+        onTap: (() {
+          Navigator.pushNamed(context, '/sign-up');
+        }),
         child: Container(
           alignment: Alignment.center,
           margin: EdgeInsets.only(
@@ -180,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             bottom: 73,
           ),
           child: Text(
-            'Hava an account? Sign In',
+            ' Dont Have an account? Sign Up',
             style: greyTextStyle.copyWith(
               fontSize: 16,
               fontWeight: light,
