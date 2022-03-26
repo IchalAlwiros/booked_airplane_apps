@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_airplane/cubit/auth_cubit.dart';
+import 'package:flutter_airplane/cubit/destinations_cubit.dart';
 import 'package:flutter_airplane/cubit/screen_cubit.dart';
+import 'package:flutter_airplane/cubit/seat_cubit.dart';
+import 'package:flutter_airplane/cubit/transction_cubit.dart';
 import 'package:flutter_airplane/ui/pages/bonus_screen.dart';
 import 'package:flutter_airplane/ui/pages/detail_screen.dart';
 import 'package:flutter_airplane/ui/pages/get_started_screen.dart';
@@ -10,6 +13,7 @@ import 'package:flutter_airplane/ui/pages/main_screen.dart';
 import 'package:flutter_airplane/ui/pages/sigin_up_screen.dart';
 import 'package:flutter_airplane/ui/pages/sign_in_sceen.dart';
 import 'package:flutter_airplane/ui/pages/splash_screen.dart';
+import 'package:flutter_airplane/ui/pages/succes_checout_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
@@ -31,6 +35,15 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AuthCubit(),
         ),
+        BlocProvider(
+          create: (context) => DestinationsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SeatCubit(),
+        ),
+        BlocProvider(
+          create: (context) => TransctionCubit(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Plane',
@@ -43,7 +56,7 @@ class MyApp extends StatelessWidget {
           '/bonus': (context) => BonusScreen(),
           '/main': (context) => MainScreen(),
           '/home': (context) => HomaScreen(),
-          '/detail': (context) => DetailsScreen(),
+          '/success': (context) => SuccesCheckoutScreen(),
         },
       ),
     );

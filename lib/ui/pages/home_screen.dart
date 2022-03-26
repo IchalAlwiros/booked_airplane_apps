@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_airplane/cubit/auth_cubit.dart';
+import 'package:flutter_airplane/cubit/destinations_cubit.dart';
+import 'package:flutter_airplane/models/destinations_model.dart';
 import 'package:flutter_airplane/shared/theme.dart';
 import 'package:flutter_airplane/ui/pages/widgets/destinations_tile.dart';
 import 'package:flutter_airplane/ui/pages/widgets/destinatios_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomaScreen extends StatelessWidget {
+class HomaScreen extends StatefulWidget {
   const HomaScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomaScreen> createState() => _HomaScreenState();
+}
+
+class _HomaScreenState extends State<HomaScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    context.read<DestinationsCubit>().fetchDestinations();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,51 +80,55 @@ class HomaScreen extends StatelessWidget {
       );
     }
 
-    Widget popularDestinations() {
+    Widget popularDestinations(List<DestinationsModel> destinations) {
       return Container(
         margin: EdgeInsets.only(top: 30),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: BouncingScrollPhysics(),
           child: Row(
-            children: [
-              CustomDestinationsCard(
-                name: 'Lake Ciliwung',
-                imagerl: 'assets/image 7.png',
-                city: 'Tangerang',
-                ratings: 4.8,
-              ),
-              CustomDestinationsCard(
-                name: 'Lake Ciliwung',
-                imagerl: 'assets/image 7.png',
-                city: 'Tangerang',
-                ratings: 4.8,
-              ),
-              CustomDestinationsCard(
-                name: 'Lake Ciliwung',
-                imagerl: 'assets/image 7.png',
-                city: 'Tangerang',
-                ratings: 4.8,
-              ),
-              CustomDestinationsCard(
-                name: 'Lake Ciliwung',
-                imagerl: 'assets/image 7.png',
-                city: 'Tangerang',
-                ratings: 4.8,
-              ),
-              CustomDestinationsCard(
-                name: 'Lake Ciliwung',
-                imagerl: 'assets/image 7.png',
-                city: 'Tangerang',
-                ratings: 4.8,
-              ),
-            ],
+            children: destinations.map((DestinationsModel destinatons) {
+              return CustomDestinationsCard(destinatons);
+            }).toList(),
+
+            // children: [
+            // CustomDestinationsCard(
+            //   // name: 'Lake Ciliwung',
+            //   // imagerl: 'assets/image 7.png',
+            //   // city: 'Tangerang',
+            //   // ratings: 4.8,
+            // ),
+            // CustomDestinationsCard(
+            //   name: 'Lake Ciliwung',
+            //   imagerl: 'assets/image 7.png',
+            //   city: 'Tangerang',
+            //   ratings: 4.8,
+            // ),
+            // CustomDestinationsCard(
+            //   name: 'Lake Ciliwung',
+            //   imagerl: 'assets/image 7.png',
+            //   city: 'Tangerang',
+            //   ratings: 4.8,
+            // ),
+            // CustomDestinationsCard(
+            //   name: 'Lake Ciliwung',
+            //   imagerl: 'assets/image 7.png',
+            //   city: 'Tangerang',
+            //   ratings: 4.8,
+            // ),
+            // CustomDestinationsCard(
+            //   name: 'Lake Ciliwung',
+            //   imagerl: 'assets/image 7.png',
+            //   city: 'Tangerang',
+            //   ratings: 4.8,
+            // ),
+            // ],
           ),
         ),
       );
     }
 
-    Widget newDestinatios() {
+    Widget newDestinatios(List<DestinationsModel> destinations) {
       return Container(
         margin: EdgeInsets.only(
           top: 30,
@@ -128,35 +146,60 @@ class HomaScreen extends StatelessWidget {
                 fontWeight: semiBold,
               ),
             ),
-            DestinationsTile(
-              name: 'Danau Beratan',
-              city: 'Singaraja',
-              imageUrl: 'assets/image 12.png',
-              ratings: 4.5,
-            ),
-            DestinationsTile(
-              name: 'Danau Beratan',
-              city: 'Singaraja',
-              imageUrl: 'assets/image 12.png',
-              ratings: 4.5,
-            ),
-            DestinationsTile(
-              name: 'Danau Beratan',
-              city: 'Singaraja',
-              imageUrl: 'assets/image 12.png',
-              ratings: 4.5,
-            ),
+
+            Column(
+              children: destinations.map((DestinationsModel destinatons) {
+                return DestinationsTile(destinatons);
+              }).toList(),
+            )
+
+            // DestinationsTile(
+            //   name: 'Danau Beratan',
+            //   city: 'Singaraja',
+            //   imageUrl: 'assets/image 12.png',
+            //   ratings: 4.5,
+            // ),
+            // DestinationsTile(
+            //   name: 'Danau Beratan',
+            //   city: 'Singaraja',
+            //   imageUrl: 'assets/image 12.png',
+            //   ratings: 4.5,
+            // ),
+            // DestinationsTile(
+            //   name: 'Danau Beratan',
+            //   city: 'Singaraja',
+            //   imageUrl: 'assets/image 12.png',
+            //   ratings: 4.5,
+            // ),
           ],
         ),
       );
     }
 
-    return ListView(
-      children: [
-        header(),
-        popularDestinations(),
-        newDestinatios(),
-      ],
-    );
+    return BlocConsumer<DestinationsCubit, DestinationsState>(
+        listener: (context, state) {
+      // TODO: implement listener
+      if (state is DestinationsFailed) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: redColor,
+            content: Text(state.error),
+          ),
+        );
+      }
+    }, builder: (context, state) {
+      if (state is DestinationsSuccess) {
+        return ListView(
+          children: [
+            header(),
+            popularDestinations(state.destinations),
+            newDestinatios(state.destinations),
+          ],
+        );
+      }
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    });
   }
 }

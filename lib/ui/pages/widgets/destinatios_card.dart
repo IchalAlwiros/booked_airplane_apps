@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_airplane/models/destinations_model.dart';
+import 'package:flutter_airplane/ui/pages/detail_screen.dart';
 
 import '../../../shared/theme.dart';
 
 class CustomDestinationsCard extends StatelessWidget {
-  final String? name, city, imagerl;
-  final double? ratings;
+  // final String? name, city, imagerl;
+  // final double? ratings;
+  final DestinationsModel destinations;
 
-  const CustomDestinationsCard({
+  const CustomDestinationsCard(
+    this.destinations, {
     Key? key,
-    @required this.name,
-    @required this.imagerl,
-    @required this.city,
-    this.ratings = 0,
+
+    // @required this.name,
+    // @required this.imagerl,
+    // @required this.city,
+    // this.ratings = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/detail');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailsScreen(destinations)));
       },
       child: Container(
         width: 200,
@@ -41,8 +49,10 @@ class CustomDestinationsCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(defaultRadius),
                 image: DecorationImage(
-                  image: AssetImage(
-                    imagerl!,
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    // imagerl!,
+                    destinations.imageUrl,
                   ),
                 ),
               ),
@@ -69,7 +79,8 @@ class CustomDestinationsCard extends StatelessWidget {
                         ))),
                       ),
                       Text(
-                        ratings.toString(),
+                        '${destinations.rating}',
+                        // ratings.toString(),
                         style: blackTextStyle.copyWith(
                           fontWeight: medium,
                         ),
@@ -86,7 +97,8 @@ class CustomDestinationsCard extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    name!,
+                    destinations.name,
+                    // name!,
                     style: blackTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: medium,
@@ -96,7 +108,8 @@ class CustomDestinationsCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    city!,
+                    destinations.city,
+                    // city!,
                     style: greyTextStyle.copyWith(
                       fontWeight: light,
                       fontSize: 14,

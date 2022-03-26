@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_airplane/cubit/destinations_cubit.dart';
+import 'package:flutter_airplane/models/destinations_model.dart';
 import 'package:flutter_airplane/shared/theme.dart';
 import 'package:flutter_airplane/ui/pages/chose_seat.dart';
 import 'package:flutter_airplane/ui/pages/widgets/custom_button.dart';
 import 'package:flutter_airplane/ui/pages/widgets/foto_items.dart';
 import 'package:flutter_airplane/ui/pages/widgets/pinters_item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key? key}) : super(key: key);
+  final DestinationsModel destinations;
+  DetailsScreen(this.destinations, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +22,9 @@ class DetailsScreen extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(
-                  'assets/image 12.png',
-                ))),
+                image: NetworkImage(destinations.imageUrl
+                    // 'assets/image 12.png',
+                    ))),
       );
     }
 
@@ -72,7 +77,8 @@ class DetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Lake Ciliwung',
+                          destinations.name,
+                          // 'Lake Ciliwung',
                           style: whiteTextStyle.copyWith(
                             fontSize: 24,
                             fontWeight: semiBold,
@@ -80,7 +86,8 @@ class DetailsScreen extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          'Tangerang',
+                          destinations.city,
+                          // 'Tangerang',
                           style: whiteTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: light,
@@ -104,7 +111,8 @@ class DetailsScreen extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        '4.9',
+                        " ${destinations.rating}",
+                        // '4.9',
                         style: blackTextStyle.copyWith(
                           fontWeight: medium,
                         ),
@@ -223,7 +231,12 @@ class DetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'IDR 2.500.000',
+                          //Mengubah Format Penomoran
+                          NumberFormat.currency(
+                                  locale: 'id',
+                                  symbol: 'IDR ',
+                                  decimalDigits: 0)
+                              .format(destinations.price),
                           style: blackTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: medium,
@@ -246,7 +259,7 @@ class DetailsScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChooseSeat(),
+                          builder: (context) => ChooseSeat(destinations),
                         ),
                       );
                     },
