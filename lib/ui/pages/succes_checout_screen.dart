@@ -47,8 +47,8 @@ class SuccesCheckoutScreen extends StatelessWidget {
               onPressed: () {
                 //NOTE: KETIKA DIKLIK MAKA AKAN DINAVIGASIKAN KE PAGE INDEX KE -
                 context.read<ScreenCubit>().setPage(1);
-                // Navigator.pushNamedAndRemoveUntil(
-                //     context, '/main', (route) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/main', (route) => false);
               },
               width: 220,
               margin: EdgeInsets.only(

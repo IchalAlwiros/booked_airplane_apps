@@ -105,7 +105,7 @@ class CheckoutScreen extends StatelessWidget {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                        transaction.destinations.imageUrl,
+                        transaction.destination.imageUrl,
                         // 'assets/image 15.png',
                       ),
                     ),
@@ -116,7 +116,7 @@ class CheckoutScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        transaction.destinations.name,
+                        transaction.destination.name,
                         // 'Dolan',
                         style: blackTextStyle.copyWith(
                           fontSize: 18,
@@ -127,7 +127,7 @@ class CheckoutScreen extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        transaction.destinations.city,
+                        transaction.destination.city,
                         // 'Tangerang',
                         style: greyTextStyle.copyWith(
                           fontWeight: light,
@@ -151,7 +151,7 @@ class CheckoutScreen extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      transaction.destinations.rating.toString(),
+                      transaction.destination.rating.toString(),
                       // '4.5',
                       style: blackTextStyle.copyWith(
                         fontWeight: medium,
@@ -331,10 +331,10 @@ class CheckoutScreen extends StatelessWidget {
     }
 
     Widget payNowButtons() {
-      return BlocConsumer<TransctionCubit, TransctionState>(
+      return BlocConsumer<TransactionCubit, TransactionState>(
         listener: (context, state) {
           // TODO: implement listener
-          if (state is TransactionSucces) {
+          if (state is TransactionSuccess) {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/success', (route) => false);
           } else if (state is TransactionFailed) {
@@ -356,7 +356,7 @@ class CheckoutScreen extends StatelessWidget {
           return CustomButtons(
             title: 'Pay Now',
             onPressed: () {
-              context.read<TransctionCubit>().createTransaction(transaction);
+              context.read<TransactionCubit>().createTransaction(transaction);
             },
             margin: EdgeInsets.only(
               top: 30,

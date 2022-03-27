@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           create: (context) => SeatCubit(),
         ),
         BlocProvider(
-          create: (context) => TransctionCubit(),
+          create: (context) => TransactionCubit(),
         )
       ],
       child: MaterialApp(

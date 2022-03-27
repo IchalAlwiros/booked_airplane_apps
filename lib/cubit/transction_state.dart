@@ -1,19 +1,53 @@
 part of 'transction_cubit.dart';
 
-abstract class TransctionState extends Equatable {
-  const TransctionState();
+// abstract class TransactionState extends Equatable {
+//   const TransactionState();
+
+//   @override
+//   List<Object> get props => [];
+// }
+
+// class TransactionInitial extends TransactionState {}
+
+// class TransactionLoading extends TransactionState {}
+
+// class TransactionSucces extends TransactionState {
+//   final List<TransactionModel> transactions;
+//   TransactionSucces(this.transactions);
+
+//   @override
+//   List<Object> get props => transactions;
+// }
+
+// class TransactionFailed extends TransactionState {
+//   final String error;
+
+//   TransactionFailed(this.error);
+
+//   @override
+//   List<Object> get props => [error];
+// }
+abstract class TransactionState extends Equatable {
+  const TransactionState();
 
   @override
   List<Object> get props => [];
 }
 
-class TransctionInitial extends TransctionState {}
+class TransactionInitial extends TransactionState {}
 
-class TransactionLoading extends TransctionState {}
+class TransactionLoading extends TransactionState {}
 
-class TransactionSucces extends TransctionState {}
+class TransactionSuccess extends TransactionState {
+  final List<TransactionModel> transactions;
 
-class TransactionFailed extends TransctionState {
+  TransactionSuccess(this.transactions);
+
+  @override
+  List<Object> get props => [transactions];
+}
+
+class TransactionFailed extends TransactionState {
   final String error;
 
   TransactionFailed(this.error);
